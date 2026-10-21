@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Knight — ChessBuild</title>
+<link rel="stylesheet" href="piece.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a href="index.html" class="site-logo">Chess<span>Build</span></a>
+  <nav class="site-nav">
+    <a href="king.html"><span class="nav-sym">♚</span> King</a>
+    <a href="queen.html"><span class="nav-sym">♛</span> Queen</a>
+    <a href="rook.html"><span class="nav-sym">♜</span> Rook</a>
+    <a href="bishop.html"><span class="nav-sym">♝</span> Bishop</a>
+    <a href="knight.html" class="active"><span class="nav-sym">♞</span> Knight</a>
+    <a href="pawn.html"><span class="nav-sym">♟</span> Pawn</a>
+  </nav>
+</header>
+
+<main class="piece-page">
+  <a href="Piece.html" class="back-btn anim-1">← Back to All Pieces</a>
+
+  <div class="piece-hero anim-2">
+    <div class="piece-hero-sym">♞</div>
+    <div>
+      <div class="piece-hero-title">The Knight</div>
+      <div class="piece-hero-sub">3 Points — Minor Piece</div>
+    </div>
+  </div>
+
+  <div class="two-col anim-3">
+    <div>
+      <div class="section-title">About the Knight</div>
+      <p class="desc-text">
+        The Knight is a <em>unique jumping piece</em>. It is the only piece that can jump over other pieces, making it highly versatile in crowded positions. A knight moves in an L-shape — two squares in one direction and then one square perpendicular to that.
+      </p>
+      <p class="desc-text">
+        Knights are particularly strong in the <em>center of the board</em>, where they can control up to eight squares. They are often used to create tactical threats and can be very effective in both opening and endgame scenarios.
+      </p>
+
+      <div class="section-title" style="margin-top:28px;">Movement Rules</div>
+      <ul class="rules-list">
+        <li>Moves in an <em>L-shape</em>: two squares in one direction, then one square perpendicular.</li>
+        <li>Can <em>jump over</em> other pieces.</li>
+        <li>Captures on the <em>square it lands on</em>.</li>
+        <li>Controls up to <em>8 squares</em> from the center.</li>
+        <li>Very strong in <em>closed positions</em>.</li>
+      </ul>
+
+      <div style="margin-top:18px;">
+        <span class="special-tag">✦ Can Jump</span>
+        <span class="special-tag">✦ Fork Master</span>
+      </div>
+
+      <div class="stat-grid" style="margin-top:30px;">
+        <div class="stat-card"><div class="stat-val">8</div><div class="stat-lbl">Max Squares</div></div>
+        <div class="stat-card"><div class="stat-val">8</div><div class="stat-lbl">Possible Moves</div></div>
+        <div class="stat-card"><div class="stat-val">3</div><div class="stat-lbl">Point Value</div></div>
+        <div class="stat-card"><div class="stat-val">2</div><div class="stat-lbl">Per Player</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-title">Movement Diagram</div>
+      <div class="diagram-label">Knight at d5 — All Reachable Squares</div>
+      <div class="mini-board" id="board-knight"></div>
+      <div class="diagram-legend">
+        <div class="legend-item"><div class="legend-dot"></div> Can Move To</div>
+        <div class="legend-item"><div class="legend-ring"></div> Can Capture</div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <span>ChessBuild</span> — Chess Pieces Reference Guide
+</footer>
+
+<script src="board.js"></script>
+<script>
+  makeBoard('board-knight', 3, 3, withEnemies(knightMoves, [[2,5],[5,4]]), '♞');
+</script>
+</body>
+</html>

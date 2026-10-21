@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Bishop — ChessBuild</title>
+<link rel="stylesheet" href="piece.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a href="index.html" class="site-logo">Chess<span>Build</span></a>
+  <nav class="site-nav">
+    <a href="king.html"><span class="nav-sym">♚</span> King</a>
+    <a href="queen.html"><span class="nav-sym">♛</span> Queen</a>
+    <a href="rook.html"><span class="nav-sym">♜</span> Rook</a>
+    <a href="bishop.html" class="active"><span class="nav-sym">♝</span> Bishop</a>
+    <a href="knight.html"><span class="nav-sym">♞</span> Knight</a>
+    <a href="pawn.html"><span class="nav-sym">♟</span> Pawn</a>
+  </nav>
+</header>
+
+<main class="piece-page">
+  <a href="Piece.html" class="back-btn anim-1">← Back to All Pieces</a>
+
+  <div class="piece-hero anim-2">
+    <div class="piece-hero-sym">♝</div>
+    <div>
+      <div class="piece-hero-title">The Bishop</div>
+      <div class="piece-hero-sub">3 Points — Minor Piece</div>
+    </div>
+  </div>
+
+  <div class="two-col anim-3">
+    <div>
+      <div class="section-title">About the Bishop</div>
+      <p class="desc-text">
+        The Bishop is a <em>long-range diagonal piece</em>. Each player begins with two bishops — 
+        one on light squares and one on dark squares. A bishop can <em>never change the color</em> 
+        of its square, making it "color-bound."
+      </p>
+      <p class="desc-text">
+        Two bishops working together — the <em>"bishop pair"</em> — are extremely powerful in open 
+        positions, covering both colors of the board. A bishop is strongest when pawns are on the 
+        <em>opposite color</em>, leaving its diagonals wide open.
+      </p>
+
+      <div class="section-title" style="margin-top:28px;">Movement Rules</div>
+      <ul class="rules-list">
+        <li>Moves <em>any number of squares diagonally</em> in any of four diagonal directions.</li>
+        <li>Always stays on the <em>same color square</em> it started on — forever.</li>
+        <li>Cannot <em>jump over</em> other pieces — path must be clear.</li>
+        <li>Two bishops on <em>opposite colors</em> together cover the whole board.</li>
+        <li>Controls up to <em>13 squares</em> from the center of the board.</li>
+      </ul>
+
+      <div style="margin-top:18px;">
+        <span class="special-tag">✦ Color-Bound</span>
+        <span class="special-tag">✦ Bishop Pair Advantage</span>
+      </div>
+
+      <div class="stat-grid" style="margin-top:30px;">
+        <div class="stat-card"><div class="stat-val">7</div><div class="stat-lbl">Max Squares</div></div>
+        <div class="stat-card"><div class="stat-val">4</div><div class="stat-lbl">Directions</div></div>
+        <div class="stat-card"><div class="stat-val">3</div><div class="stat-lbl">Point Value</div></div>
+        <div class="stat-card"><div class="stat-val">2</div><div class="stat-lbl">Per Player</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-title">Movement Diagram</div>
+      <div class="diagram-label">Bishop at d5 — All Reachable Squares</div>
+      <div class="mini-board" id="board-bishop"></div>
+      <div class="diagram-legend">
+        <div class="legend-item"><div class="legend-dot"></div> Can Move To</div>
+        <div class="legend-item"><div class="legend-ring"></div> Can Capture</div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <span>ChessBuild</span> — Chess Pieces Reference Guide
+</footer>
+
+<script src="board.js"></script>
+<script>
+  makeBoard('board-bishop', 3, 3, withEnemies(bishopMoves, [[0,0],[6,6]]), '♝');
+</script>
+</body>
+</html>

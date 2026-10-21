@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChessBuild-Chess Bot Trainer </title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+<link rel="stylesheet" href="bot.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">♞</div>
+    <div>
+      <div class="logo-text">ChessBuild</div>
+    </div>
+  </div>
+  <div class="header-actions">
+    <button class="btn" onclick="flipBoard()">⇅ Flip Board</button>
+    <button class="btn" onclick="requestHint()">💡 Hint</button>
+    <button class="btn btn-gold" onclick="newGame()">New Game</button>
+  </div>
+</header>
+
+<div class="app">
+  <!-- LEFT PANEL -->
+  <div class="panel-left">
+    <div class="panel-section">
+      <div class="panel-label">Difficulty</div>
+      <div class="diff-grid">
+        <div class="diff-btn active" data-level="1" onclick="setDifficulty(1)">Beginner</div>
+        <div class="diff-btn" data-level="4" onclick="setDifficulty(4)">Club</div>
+        <div class="diff-btn" data-level="8" onclick="setDifficulty(8)">Master</div>
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-label">Lessons</div>
+      <div class="lesson-item active" onclick="startLesson('basics')">
+        <div class="lesson-icon active-lesson">♟</div>
+        <div class="lesson-info">
+          <div class="lesson-name">Piece Movement</div>
+          <div class="lesson-desc">How each piece moves</div>
+        </div>
+      </div>
+      <div class="lesson-item" onclick="startLesson('checkmate')">
+        <div class="lesson-icon">♛</div>
+        <div class="lesson-info">
+          <div class="lesson-name">Checkmate Patterns</div>
+          <div class="lesson-desc">Scholar's & Fool's mate</div>
+        </div>
+      </div>
+      <div class="lesson-item" onclick="startLesson('openings')">
+        <div class="lesson-icon">🏰</div>
+        <div class="lesson-info">
+          <div class="lesson-name">Opening Principles</div>
+          <div class="lesson-desc">Center, develop, castle</div>
+        </div>
+      </div>
+      <div class="lesson-item" onclick="startLesson('tactics')">
+        <div class="lesson-icon">⚔</div>
+        <div class="lesson-info">
+          <div class="lesson-name">Basic Tactics</div>
+          <div class="lesson-desc">Forks, pins & skewers</div>
+        </div>
+      </div>
+      <div class="lesson-item" onclick="startLesson('endgame')">
+        <div class="lesson-icon">👑</div>
+        <div class="lesson-info">
+          <div class="lesson-name">Endgame Basics</div>
+          <div class="lesson-desc">King & pawn endings</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-label">Session Stats</div>
+      <div class="stat-row">
+        <span class="stat-label">Moves Made</span>
+        <span class="stat-value gold" id="stat-moves">0</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Good Moves</span>
+        <span class="stat-value" id="stat-good">0</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Mistakes</span>
+        <span class="stat-value" id="stat-mistakes">0</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Accuracy</span>
+        <span class="stat-value gold" id="stat-acc">—</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CENTER BOARD -->
+  <div class="board-area">
+    <!-- AI player bar -->
+    <div class="player-bar">
+      <div class="player-avatar ai">🤖</div>
+      <div>
+        <div class="player-name">ChessMentor AI</div>
+        <div class="player-rating">Elo <span id="ai-elo">800</span></div>
+      </div>
+      <div class="captured-pieces" id="cap-white"></div>
+      <div class="turn-dot hidden" id="dot-ai"></div>
+    </div>
+
+    <!-- Board + eval bar -->
+    <div class="board-wrap" style="position:relative;">
+      <div class="eval-bar-wrap">
+        <div class="eval-bar-fill" id="eval-bar" style="height:50%"></div>
+      </div>
+      <div id="board"></div>
+      <!-- Rank labels -->
+      <div style="position:absolute;left:-22px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;align-items:center;pointer-events:none;">
+        <span id="rl8" class="coord-label">8</span><span id="rl7" class="coord-label">7</span>
+        <span id="rl6" class="coord-label">6</span><span id="rl5" class="coord-label">5</span>
+        <span id="rl4" class="coord-label">4</span><span id="rl3" class="coord-label">3</span>
+        <span id="rl2" class="coord-label">2</span><span id="rl1" class="coord-label">1</span>
+      </div>
+      <div style="position:absolute;bottom:-22px;left:0;right:0;display:flex;justify-content:space-around;align-items:center;pointer-events:none;">
+        <span id="fl-a" class="coord-label">a</span><span class="coord-label">b</span><span class="coord-label">c</span>
+        <span class="coord-label">d</span><span class="coord-label">e</span><span class="coord-label">f</span>
+        <span class="coord-label">g</span><span class="coord-label">h</span>
+      </div>
+    </div>
+
+    <!-- Human player bar -->
+    <div class="player-bar">
+      <div class="player-avatar">🧑</div>
+      <div>
+        <div class="player-name">You</div>
+        <div class="player-rating">Learning Mode</div>
+      </div>
+      <div class="captured-pieces" id="cap-black"></div>
+      <div class="turn-dot" id="dot-human"></div>
+    </div>
+
+    <!-- Board controls -->
+    <div class="board-controls">
+      <button class="ctrl-btn" onclick="goToStart()">⏮</button>
+      <button class="ctrl-btn" onclick="goBack()">◀</button>
+      <button class="ctrl-btn" onclick="toggleAnalysis()" id="analysis-btn">📊 Analysis</button>
+      <button class="ctrl-btn" onclick="goForward()">▶</button>
+      <button class="ctrl-btn" onclick="goToEnd()">⏭</button>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL — DR. WOLF TUTOR -->
+  <div class="panel-right">
+    <div class="tutor-header">
+      <div class="tutor-avatar">♟️</div>
+      <div>
+        <div class="tutor-name">Dr. Build</div>
+        <div class="tutor-tagline">Your Chess Tutor</div>
+      </div>
+      <div class="online-dot"></div>
+    </div>
+
+    <div class="chat-messages" id="chat-messages"></div>
+
+    <!-- Analysis -->
+    <div class="analysis-bar" id="analysis-bar">
+      <span class="analysis-label">EVAL</span>
+      <span class="eval-num positive" id="eval-display">+0.00</span>
+      <span class="depth-badge" id="depth-display">depth —</span>
+    </div>
+
+    <!-- Move history -->
+    <div class="move-history-panel">
+      <div class="moves-grid" id="moves-grid"></div>
+    </div>
+
+    <div class="chat-input-area">
+      <textarea class="chat-input" id="chat-input" placeholder="Ask Dr. Build anything…" rows="1"
+        onkeydown="handleChatKey(event)"></textarea>
+      <button class="send-btn" onclick="sendChatMessage()">➤</button>
+    </div>
+  </div>
+</div>
+
+<!-- Game over overlay -->
+<div class="overlay hidden" id="overlay">
+  <div class="overlay-card">
+    <div class="overlay-icon" id="overlay-icon">🏆</div>
+    <div class="overlay-title" id="overlay-title">Game Over</div>
+    <div class="overlay-msg" id="overlay-msg">...</div>
+    <div class="overlay-actions">
+      <button class="btn btn-gold" onclick="newGame()">Play Again</button>
+      <button class="btn" onclick="hideOverlay()">Review Game</button>
+    </div>
+  </div>
+</div>
+
+<!-- Promotion dialog -->
+<div class="overlay hidden" id="promo-overlay">
+  <div class="overlay-card">
+    <div class="overlay-title" style="margin-bottom:1rem;">Choose Promotion</div>
+    <div style="display:flex;gap:12px;justify-content:center;margin-bottom:1rem;">
+      <button class="btn" onclick="promote('q')" style="font-size:2rem;padding:12px 16px;">♛</button>
+      <button class="btn" onclick="promote('r')" style="font-size:2rem;padding:12px 16px;">♜</button>
+      <button class="btn" onclick="promote('b')" style="font-size:2rem;padding:12px 16px;">♝</button>
+      <button class="btn" onclick="promote('n')" style="font-size:2rem;padding:12px 16px;">♞</button>
+    </div>
+  </div>
+</div>
+<script src="bot.js"></script>
+</body>
+</html>

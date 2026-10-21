@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Queen — ChessBuild</title>
+<link rel="stylesheet" href="piece.css">
+</head>
+<body>
+
+<header class="site-header">
+  <a href="index.html" class="site-logo">Chess<span>Build</span></a>
+  <nav class="site-nav">
+    <a href="king.html"><span class="nav-sym">♚</span> King</a>
+    <a href="queen.html" class="active"><span class="nav-sym">♛</span> Queen</a>
+    <a href="rook.html"><span class="nav-sym">♜</span> Rook</a>
+    <a href="bishop.html"><span class="nav-sym">♝</span> Bishop</a>
+    <a href="knight.html"><span class="nav-sym">♞</span> Knight</a>
+    <a href="pawn.html"><span class="nav-sym">♟</span> Pawn</a>
+  </nav>
+</header>
+
+<main class="piece-page">
+  <a href="Piece.html" class="back-btn anim-1">← Back to All Pieces</a>
+
+  <div class="piece-hero anim-2">
+    <div class="piece-hero-sym">♛</div>
+    <div>
+      <div class="piece-hero-title">The Queen</div>
+      <div class="piece-hero-sub">9 Points — Most Powerful Piece</div>
+    </div>
+  </div>
+
+  <div class="two-col anim-3">
+    <div>
+      <div class="section-title">About the Queen</div>
+      <p class="desc-text">
+        The Queen is the <em>most powerful piece</em> on the board. She combines the full movement 
+        of the Rook and Bishop, allowing her to sweep across the board in any direction for any number of squares.
+      </p>
+      <p class="desc-text">
+        Losing the Queen is almost always <em>catastrophic</em>. Players guard her carefully while 
+        using her sweeping power to create threats, control open lines, and deliver checkmate.
+      </p>
+
+      <div class="section-title" style="margin-top:28px;">Movement Rules</div>
+      <ul class="rules-list">
+        <li>Moves <em>any number of squares</em> horizontally, vertically, or diagonally.</li>
+        <li>Combines the movement of <em>Rook + Bishop</em> in a single piece.</li>
+        <li>Cannot <em>jump over</em> other pieces — her path must be clear.</li>
+        <li>Controls up to <em>27 squares</em> from the center of the board.</li>
+        <li>Can capture any <em>enemy piece</em> along her movement path.</li>
+      </ul>
+
+      <div style="margin-top:18px;">
+        <span class="special-tag">✦ Rook + Bishop Combined</span>
+        <span class="special-tag">✦ 27 Squares From Center</span>
+      </div>
+
+      <div class="stat-grid" style="margin-top:30px;">
+        <div class="stat-card"><div class="stat-val">7</div><div class="stat-lbl">Max Squares</div></div>
+        <div class="stat-card"><div class="stat-val">8</div><div class="stat-lbl">Directions</div></div>
+        <div class="stat-card"><div class="stat-val">9</div><div class="stat-lbl">Point Value</div></div>
+        <div class="stat-card"><div class="stat-val">1</div><div class="stat-lbl">Per Player</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-title">Movement Diagram</div>
+      <div class="diagram-label">Queen at d5 — All Reachable Squares</div>
+      <div class="mini-board" id="board-queen"></div>
+      <div class="diagram-legend">
+        <div class="legend-item"><div class="legend-dot"></div> Can Move To</div>
+        <div class="legend-item"><div class="legend-ring"></div> Can Capture</div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <span>ChessBuild</span> — Chess Pieces Reference Guide
+</footer>
+
+<script src="board.js"></script>
+<script>
+  makeBoard('board-queen', 3, 3, withEnemies(queenMoves, [[0,3],[3,7],[7,0],[6,6]]), '♛');
+</script>
+</body>
+</html>
